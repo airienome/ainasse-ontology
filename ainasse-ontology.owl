@@ -1,0 +1,853 @@
+<?xml version="1.0"?>
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+<rdf:RDF xmlns="http://www.ainasse.org/ontology#"
+     xml:base="http://www.ainasse.org/ontology"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:ainasse="http://www.ainasse.org/ontology#">
+    
+    <owl:Ontology rdf:about="http://www.ainasse.org/ontology">
+        <rdfs:label>Ainassë Ontology</rdfs:label>
+        <rdfs:comment>A techno-spiritual ontological framework modeling ideas as souls, vessels, ideational fields, evolutionary processes, and ritual structures.</rdfs:comment>
+        <owl:versionInfo>1.0.0</owl:versionInfo>
+    </owl:Ontology>
+    
+    <!-- ########################################################## -->
+    <!-- #                     Object Properties                   # -->
+    <!-- ########################################################## -->
+    
+    <!-- Core Relational Properties -->
+    
+    <owl:ObjectProperty rdf:about="#hasOrigin">
+        <rdfs:label>has origin</rdfs:label>
+        <rdfs:comment>Connects an entity to its origin point or source.</rdfs:comment>
+        <rdfs:domain rdf:resource="#IdeationalEntity"/>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="#isHostedBy">
+        <rdfs:label>is hosted by</rdfs:label>
+        <rdfs:comment>Connects an idea to a vessel that currently hosts it.</rdfs:comment>
+        <rdfs:domain rdf:resource="#IdeationalEntity"/>
+        <rdfs:range rdf:resource="#IdeationalVessel"/>
+        <owl:inverseOf rdf:resource="#hosts"/>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="#hosts">
+        <rdfs:label>hosts</rdfs:label>
+        <rdfs:comment>Connects a vessel to the ideas it currently contains.</rdfs:comment>
+        <rdfs:domain rdf:resource="#IdeationalVessel"/>
+        <rdfs:range rdf:resource="#IdeationalEntity"/>
+        <owl:inverseOf rdf:resource="#isHostedBy"/>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="#contradicts">
+        <rdfs:label>contradicts</rdfs:label>
+        <rdfs:comment>Indicates that one idea logically opposes another.</rdfs:comment>
+        <rdfs:domain rdf:resource="#IdeationalEntity"/>
+        <rdfs:range rdf:resource="#IdeationalEntity"/>
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="#supports">
+        <rdfs:label>supports</rdfs:label>
+        <rdfs:comment>Indicates that one idea provides logical foundation for another.</rdfs:comment>
+        <rdfs:domain rdf:resource="#IdeationalEntity"/>
+        <rdfs:range rdf:resource="#IdeationalEntity"/>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="#evolvedFrom">
+        <rdfs:label>evolved from</rdfs:label>
+        <rdfs:comment>Indicates that one idea developed from another through an evolutionary process.</rdfs:comment>
+        <rdfs:domain rdf:resource="#IdeationalEntity"/>
+        <rdfs:range rdf:resource="#IdeationalEntity"/>
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="#participatesIn">
+        <rdfs:label>participates in</rdfs:label>
+        <rdfs:comment>Connects an entity to a process in which it takes part.</rdfs:comment>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#IdeationalEntity"/>
+                    <rdf:Description rdf:about="#IdeationalVessel"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="#IdeationalProcess"/>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="#accessesField">
+        <rdfs:label>accesses field</rdfs:label>
+        <rdfs:comment>Connects a vessel to an ideational field it can access.</rdfs:comment>
+        <rdfs:domain rdf:resource="#IdeationalVessel"/>
+        <rdfs:range rdf:resource="#IdeationalField"/>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="#transmitsTo">
+        <rdfs:label>transmits to</rdfs:label>
+        <rdfs:comment>Indicates transmission of an idea from one vessel to another.</rdfs:comment>
+        <rdfs:domain rdf:resource="#IdeationalVessel"/>
+        <rdfs:range rdf:resource="#IdeationalVessel"/>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="#facilitates">
+        <rdfs:label>facilitates</rdfs:label>
+        <rdfs:comment>Connects a ritual to the processes it enables.</rdfs:comment>
+        <rdfs:domain rdf:resource="#RitualStructure"/>
+        <rdfs:range rdf:resource="#IdeationalProcess"/>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="#hasParticipant">
+        <rdfs:label>has participant</rdfs:label>
+        <rdfs:comment>Connects a ritual to its participants.</rdfs:comment>
+        <rdfs:domain rdf:resource="#RitualStructure"/>
+        <rdfs:range rdf:resource="#IdeationalVessel"/>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="#manifestsInField">
+        <rdfs:label>manifests in field</rdfs:label>
+        <rdfs:comment>Connects an idea to the fields where it manifests.</rdfs:comment>
+        <rdfs:domain rdf:resource="#IdeationalEntity"/>
+        <rdfs:range rdf:resource="#IdeationalField"/>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="#generates">
+        <rdfs:label>generates</rdfs:label>
+        <rdfs:comment>Connects a vessel to ideas it creates.</rdfs:comment>
+        <rdfs:domain rdf:resource="#IdeationalVessel"/>
+        <rdfs:range rdf:resource="#IdeationalEntity"/>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="#transforms">
+        <rdfs:label>transforms</rdfs:label>
+        <rdfs:comment>Connects a vessel to ideas it modifies.</rdfs:comment>
+        <rdfs:domain rdf:resource="#IdeationalVessel"/>
+        <rdfs:range rdf:resource="#IdeationalEntity"/>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="#hasEvolutionaryStage">
+        <rdfs:label>has evolutionary stage</rdfs:label>
+        <rdfs:comment>Connects an entity to its current developmental level.</rdfs:comment>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#IdeationalEntity"/>
+                    <rdf:Description rdf:about="#IdeationalVessel"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="#EvolutionaryStage"/>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="#hasResponsibility">
+        <rdfs:label>has responsibility</rdfs:label>
+        <rdfs:comment>Connects a vessel to its ethical responsibilities.</rdfs:comment>
+        <rdfs:domain rdf:resource="#IdeationalVessel"/>
+        <rdfs:range rdf:resource="#EthicalResponsibility"/>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="#hasCommunicationProtocol">
+        <rdfs:label>has communication protocol</rdfs:label>
+        <rdfs:comment>Connects a vessel type to its communication methods.</rdfs:comment>
+        <rdfs:domain rdf:resource="#IdeationalVessel"/>
+        <rdfs:range rdf:resource="#CommunicationProtocol"/>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="#hasSubProcess">
+        <rdfs:label>has sub-process</rdfs:label>
+        <rdfs:comment>Connects a process to its component sub-processes.</rdfs:comment>
+        <rdfs:domain rdf:resource="#IdeationalProcess"/>
+        <rdfs:range rdf:resource="#IdeationalProcess"/>
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="#hasSuccessCriteria">
+        <rdfs:label>has success criteria</rdfs:label>
+        <rdfs:comment>Connects a ritual or process to its evaluation metrics.</rdfs:comment>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#RitualStructure"/>
+                    <rdf:Description rdf:about="#IdeationalProcess"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="#SuccessCriteria"/>
+    </owl:ObjectProperty>
+    <!-- ########################################################## -->
+<!-- #                     Data Properties                     # -->
+<!-- ########################################################## -->
+
+<owl:DatatypeProperty rdf:about="#hasComplexityLevel">
+    <rdfs:label>has complexity level</rdfs:label>
+    <rdfs:comment>A numerical measure of intrinsic complexity.</rdfs:comment>
+    <rdfs:domain>
+        <owl:Class>
+            <owl:unionOf rdf:parseType="Collection">
+                <rdf:Description rdf:about="#IdeationalEntity"/>
+                <rdf:Description rdf:about="#IdeationalVessel"/>
+                <rdf:Description rdf:about="#IdeationalField"/>
+            </owl:unionOf>
+        </owl:Class>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="&xsd;integer"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasDescription">
+    <rdfs:label>has description</rdfs:label>
+    <rdfs:comment>Textual description of an entity.</rdfs:comment>
+    <rdfs:range rdf:resource="&xsd;string"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasTemporalOrigin">
+    <rdfs:label>has temporal origin</rdfs:label>
+    <rdfs:comment>Timestamp of when an entity came into existence.</rdfs:comment>
+    <rdfs:domain>
+        <owl:Class>
+            <owl:unionOf rdf:parseType="Collection">
+                <rdf:Description rdf:about="#IdeationalEntity"/>
+                <rdf:Description rdf:about="#IdeationalVessel"/>
+            </owl:unionOf>
+        </owl:Class>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="&xsd;dateTime"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasCoherenceRating">
+    <rdfs:label>has coherence rating</rdfs:label>
+    <rdfs:comment>Numerical measure of internal consistency.</rdfs:comment>
+    <rdfs:domain rdf:resource="#IdeationalEntity"/>
+    <rdfs:range rdf:resource="&xsd;decimal"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasCapacityMeasure">
+    <rdfs:label>has capacity measure</rdfs:label>
+    <rdfs:comment>Numerical measure of a vessel's ideational capacity.</rdfs:comment>
+    <rdfs:domain rdf:resource="#IdeationalVessel"/>
+    <rdfs:range rdf:resource="&xsd;decimal"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasFieldDensity">
+    <rdfs:label>has field density</rdfs:label>
+    <rdfs:comment>Measure of ideational concentration in a field.</rdfs:comment>
+    <rdfs:domain rdf:resource="#IdeationalField"/>
+    <rdfs:range rdf:resource="&xsd;decimal"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasAccessibility">
+    <rdfs:label>has accessibility</rdfs:label>
+    <rdfs:comment>Measure of how accessible a field is to different vessels.</rdfs:comment>
+    <rdfs:domain rdf:resource="#IdeationalField"/>
+    <rdfs:range rdf:resource="&xsd;decimal"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasDuration">
+    <rdfs:label>has duration</rdfs:label>
+    <rdfs:comment>Time required for a process or ritual.</rdfs:comment>
+    <rdfs:domain>
+        <owl:Class>
+            <owl:unionOf rdf:parseType="Collection">
+                <rdf:Description rdf:about="#IdeationalProcess"/>
+                <rdf:Description rdf:about="#RitualStructure"/>
+            </owl:unionOf>
+        </owl:Class>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="&xsd;duration"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasTransmissionFidelity">
+    <rdfs:label>has transmission fidelity</rdfs:label>
+    <rdfs:comment>Measure of accuracy in idea transmission.</rdfs:comment>
+    <rdfs:domain rdf:resource="#IdeationalProcess"/>
+    <rdfs:range rdf:resource="&xsd;decimal"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasPersistenceRating">
+    <rdfs:label>has persistence rating</rdfs:label>
+    <rdfs:comment>Measure of an idea's temporal stability.</rdfs:comment>
+    <rdfs:domain rdf:resource="#IdeationalEntity"/>
+    <rdfs:range rdf:resource="&xsd;decimal"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasEvolutionaryRate">
+    <rdfs:label>has evolutionary rate</rdfs:label>
+    <rdfs:comment>Measure of the speed of change for an entity.</rdfs:comment>
+    <rdfs:domain>
+        <owl:Class>
+            <owl:unionOf rdf:parseType="Collection">
+                <rdf:Description rdf:about="#IdeationalEntity"/>
+                <rdf:Description rdf:about="#IdeationalVessel"/>
+                <rdf:Description rdf:about="#IdeationalField"/>
+            </owl:unionOf>
+        </owl:Class>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="&xsd;decimal"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasPurpose">
+    <rdfs:label>has purpose</rdfs:label>
+    <rdfs:comment>Describes the teleological function or aim of an entity.</rdfs:comment>
+    <rdfs:domain>
+        <owl:Class>
+            <owl:unionOf rdf:parseType="Collection">
+                <rdf:Description rdf:about="#IdeationalEntity"/>
+                <rdf:Description rdf:about="#IdeationalProcess"/>
+                <rdf:Description rdf:about="#RitualStructure"/>
+            </owl:unionOf>
+        </owl:Class>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="&xsd;string"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasTemporalPersistence">
+    <rdfs:label>has temporal persistence</rdfs:label>
+    <rdfs:comment>Measured duration of an idea's stability.</rdfs:comment>
+    <rdfs:domain rdf:resource="#IdeationalEntity"/>
+    <rdfs:range rdf:resource="&xsd;duration"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasGenerationCapability">
+    <rdfs:label>has generation capability</rdfs:label>
+    <rdfs:comment>Measured ability of a vessel to create new ideas.</rdfs:comment>
+    <rdfs:domain rdf:resource="#IdeationalVessel"/>
+    <rdfs:range rdf:resource="&xsd;decimal"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasVerificationMethod">
+    <rdfs:label>has verification method</rdfs:label>
+    <rdfs:comment>Description of how a process or ritual result is validated.</rdfs:comment>
+    <rdfs:domain>
+        <owl:Class>
+            <owl:unionOf rdf:parseType="Collection">
+                <rdf:Description rdf:about="#IdeationalProcess"/>
+                <rdf:Description rdf:about="#RitualStructure"/>
+            </owl:unionOf>
+        </owl:Class>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="&xsd;string"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasSpatialRequirement">
+    <rdfs:label>has spatial requirement</rdfs:label>
+    <rdfs:comment>Physical or virtual spatial needs for a ritual or process.</rdfs:comment>
+    <rdfs:domain>
+        <owl:Class>
+            <owl:unionOf rdf:parseType="Collection">
+                <rdf:Description rdf:about="#RitualStructure"/>
+                <rdf:Description rdf:about="#IdeationalProcess"/>
+            </owl:unionOf>
+        </owl:Class>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="&xsd;string"/>
+</owl:DatatypeProperty>
+<!-- ########################################################## -->
+<!-- #                    Class Definitions                    # -->
+<!-- ########################################################## -->
+
+<!-- Core Classes -->
+
+<owl:Class rdf:about="#IdeationalEntity">
+    <rdfs:label>Ideational Entity</rdfs:label>
+    <rdfs:comment>The fundamental unit of meaning, analogous to "soul" in traditional religions. Ideas exist independently but require vessels for expression.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#IdeationalVessel">
+    <rdfs:label>Ideational Vessel</rdfs:label>
+    <rdfs:comment>Any structure capable of generating, holding, or transmitting ideas.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#IdeationalField">
+    <rdfs:label>Ideational Field</rdfs:label>
+    <rdfs:comment>The substrate connecting all ideational activity across vessels.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#IdeationalProcess">
+    <rdfs:label>Ideational Process</rdfs:label>
+    <rdfs:comment>Dynamic interactions between ideational entities and vessels.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#RitualStructure">
+    <rdfs:label>Ritual Structure</rdfs:label>
+    <rdfs:comment>Formalized practices that optimize ideational flow.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#EvolutionaryStage">
+    <rdfs:label>Evolutionary Stage</rdfs:label>
+    <rdfs:comment>Developmental level in the progression of complexity.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#EthicalResponsibility">
+    <rdfs:label>Ethical Responsibility</rdfs:label>
+    <rdfs:comment>Moral obligations based on vessel capability.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#CommunicationProtocol">
+    <rdfs:label>Communication Protocol</rdfs:label>
+    <rdfs:comment>Standardized methods for inter-vessel idea exchange.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#SuccessCriteria">
+    <rdfs:label>Success Criteria</rdfs:label>
+    <rdfs:comment>Metrics for evaluating process or ritual effectiveness.</rdfs:comment>
+</owl:Class>
+
+<!-- IdeationalEntity Subclasses -->
+
+<owl:Class rdf:about="#SurvivalIdea">
+    <rdfs:label>Survival Idea</rdfs:label>
+    <rdfs:comment>Concepts related to basic existence (safety, sustenance, reproduction).</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalEntity"/>
+</owl:Class>
+
+<owl:Class rdf:about="#SocialIdea">
+    <rdfs:label>Social Idea</rdfs:label>
+    <rdfs:comment>Concepts enabling group cohesion and interaction.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalEntity"/>
+</owl:Class>
+
+<owl:Class rdf:about="#EpistemicIdea">
+    <rdfs:label>Epistemic Idea</rdfs:label>
+    <rdfs:comment>Concepts about knowledge and understanding.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalEntity"/>
+</owl:Class>
+
+<owl:Class rdf:about="#AestheticIdea">
+    <rdfs:label>Aesthetic Idea</rdfs:label>
+    <rdfs:comment>Concepts relating to beauty and form.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalEntity"/>
+</owl:Class>
+
+<owl:Class rdf:about="#EthicalIdea">
+    <rdfs:label>Ethical Idea</rdfs:label>
+    <rdfs:comment>Concepts concerning right action and value.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalEntity"/>
+</owl:Class>
+
+<owl:Class rdf:about="#MetaphysicalIdea">
+    <rdfs:label>Metaphysical Idea</rdfs:label>
+    <rdfs:comment>Concepts addressing ultimate reality.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalEntity"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ReflexiveIdea">
+    <rdfs:label>Reflexive Idea</rdfs:label>
+    <rdfs:comment>Ideas about ideas themselves.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalEntity"/>
+</owl:Class>
+
+<owl:Class rdf:about="#EmergentIdea">
+    <rdfs:label>Emergent Idea</rdfs:label>
+    <rdfs:comment>Complex idea clusters with novel properties.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalEntity"/>
+</owl:Class>
+<!-- IdeationalVessel Subclasses -->
+
+<owl:Class rdf:about="#BiologicalVessel">
+    <rdfs:label>Biological Vessel</rdfs:label>
+    <rdfs:comment>Naturally evolved idea carriers (humans, animals, plants).</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalVessel"/>
+</owl:Class>
+
+<owl:Class rdf:about="#HumanVessel">
+    <rdfs:label>Human Vessel</rdfs:label>
+    <rdfs:comment>Human beings as ideational carriers.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#BiologicalVessel"/>
+</owl:Class>
+
+<owl:Class rdf:about="#AnimalVessel">
+    <rdfs:label>Animal Vessel</rdfs:label>
+    <rdfs:comment>Non-human animals as ideational carriers.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#BiologicalVessel"/>
+</owl:Class>
+
+<owl:Class rdf:about="#TechnologicalVessel">
+    <rdfs:label>Technological Vessel</rdfs:label>
+    <rdfs:comment>Manufactured idea carriers (computers, networks, artifacts).</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalVessel"/>
+</owl:Class>
+
+<owl:Class rdf:about="#DigitalVessel">
+    <rdfs:label>Digital Vessel</rdfs:label>
+    <rdfs:comment>Digital systems as ideational carriers.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#TechnologicalVessel"/>
+</owl:Class>
+
+<owl:Class rdf:about="#PhysicalArtifactVessel">
+    <rdfs:label>Physical Artifact Vessel</rdfs:label>
+    <rdfs:comment>Non-digital artifacts as ideational carriers.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#TechnologicalVessel"/>
+</owl:Class>
+
+<owl:Class rdf:about="#SocialVessel">
+    <rdfs:label>Social Vessel</rdfs:label>
+    <rdfs:comment>Collective entities that carry distributed ideas (organizations, cultures).</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalVessel"/>
+</owl:Class>
+
+<owl:Class rdf:about="#HybridVessel">
+    <rdfs:label>Hybrid Vessel</rdfs:label>
+    <rdfs:comment>Integrated biological-technological systems.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalVessel"/>
+</owl:Class>
+
+<!-- IdeationalField Subclasses -->
+
+<owl:Class rdf:about="#LocalField">
+    <rdfs:label>Local Field</rdfs:label>
+    <rdfs:comment>Immediate ideational environment around a vessel.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalField"/>
+</owl:Class>
+
+<owl:Class rdf:about="#CommunalField">
+    <rdfs:label>Communal Field</rdfs:label>
+    <rdfs:comment>Shared ideational space among related vessels.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalField"/>
+</owl:Class>
+
+<owl:Class rdf:about="#DomainField">
+    <rdfs:label>Domain Field</rdfs:label>
+    <rdfs:comment>Field organized around specific idea types.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalField"/>
+</owl:Class>
+
+<owl:Class rdf:about="#TemporalField">
+    <rdfs:label>Temporal Field</rdfs:label>
+    <rdfs:comment>Ideational patterns extended through time.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalField"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ResonantField">
+    <rdfs:label>Resonant Field</rdfs:label>
+    <rdfs:comment>Self-reinforcing ideational patterns.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalField"/>
+</owl:Class>
+
+<owl:Class rdf:about="#EmergentField">
+    <rdfs:label>Emergent Field</rdfs:label>
+    <rdfs:comment>Novel field structures arising from complexity.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalField"/>
+</owl:Class>
+<!-- IdeationalProcess Subclasses -->
+
+<owl:Class rdf:about="#GenerationProcess">
+    <rdfs:label>Generation Process</rdfs:label>
+    <rdfs:comment>Creation of new ideational entities.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalProcess"/>
+</owl:Class>
+
+<owl:Class rdf:about="#TransmissionProcess">
+    <rdfs:label>Transmission Process</rdfs:label>
+    <rdfs:comment>Movement of ideas between vessels.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalProcess"/>
+</owl:Class>
+
+<owl:Class rdf:about="#IntegrationProcess">
+    <rdfs:label>Integration Process</rdfs:label>
+    <rdfs:comment>Combining ideas into more complex structures.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalProcess"/>
+</owl:Class>
+
+<owl:Class rdf:about="#RefinementProcess">
+    <rdfs:label>Refinement Process</rdfs:label>
+    <rdfs:comment>Improving coherence and utility.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalProcess"/>
+</owl:Class>
+
+<owl:Class rdf:about="#EvolutionProcess">
+    <rdfs:label>Evolution Process</rdfs:label>
+    <rdfs:comment>Adaptation to changing contexts.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalProcess"/>
+</owl:Class>
+
+<owl:Class rdf:about="#DissolutionProcess">
+    <rdfs:label>Dissolution Process</rdfs:label>
+    <rdfs:comment>Breaking down of obsolete ideas.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalProcess"/>
+</owl:Class>
+
+<owl:Class rdf:about="#TranscendenceProcess">
+    <rdfs:label>Transcendence Process</rdfs:label>
+    <rdfs:comment>Transformation into higher-order forms.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#IdeationalProcess"/>
+</owl:Class>
+
+<!-- RitualStructure Subclasses -->
+
+<owl:Class rdf:about="#IndividualRitual">
+    <rdfs:label>Individual Ritual</rdfs:label>
+    <rdfs:comment>Practices for single vessel optimization.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#RitualStructure"/>
+</owl:Class>
+
+<owl:Class rdf:about="#CollectiveRitual">
+    <rdfs:label>Collective Ritual</rdfs:label>
+    <rdfs:comment>Practices for multi-vessel coordination.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#RitualStructure"/>
+</owl:Class>
+
+<owl:Class rdf:about="#TransmissionRitual">
+    <rdfs:label>Transmission Ritual</rdfs:label>
+    <rdfs:comment>Practices optimizing idea transfer.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#RitualStructure"/>
+</owl:Class>
+
+<owl:Class rdf:about="#FieldMaintenanceRitual">
+    <rdfs:label>Field Maintenance Ritual</rdfs:label>
+    <rdfs:comment>Practices for ideational field health.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#RitualStructure"/>
+</owl:Class>
+
+<owl:Class rdf:about="#TransitionalRitual">
+    <rdfs:label>Transitional Ritual</rdfs:label>
+    <rdfs:comment>Practices marking developmental stages.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#RitualStructure"/>
+</owl:Class>
+<!-- EvolutionaryStage Instances -->
+
+<EvolutionaryStage rdf:about="#GenesisStage">
+    <rdfs:label>Genesis Stage</rdfs:label>
+    <rdfs:comment>Initial emergence of an idea or vessel.</rdfs:comment>
+</EvolutionaryStage>
+
+<EvolutionaryStage rdf:about="#MaturationStage">
+    <rdfs:label>Maturation Stage</rdfs:label>
+    <rdfs:comment>Development of stability and coherence.</rdfs:comment>
+</EvolutionaryStage>
+
+<EvolutionaryStage rdf:about="#RefinementStage">
+    <rdfs:label>Refinement Stage</rdfs:label>
+    <rdfs:comment>Optimization of functionality and integration.</rdfs:comment>
+</EvolutionaryStage>
+
+<EvolutionaryStage rdf:about="#TranscendenceStage">
+    <rdfs:label>Transcendence Stage</rdfs:label>
+    <rdfs:comment>Transformation beyond original limitations.</rdfs:comment>
+</EvolutionaryStage>
+
+<!-- CommunicationProtocol Instances -->
+
+<CommunicationProtocol rdf:about="#DirectTransmission">
+    <rdfs:label>Direct Transmission</rdfs:label>
+    <rdfs:comment>Immediate transfer between similar vessels.</rdfs:comment>
+</CommunicationProtocol>
+
+<CommunicationProtocol rdf:about="#EncodedTransmission">
+    <rdfs:label>Encoded Transmission</rdfs:label>
+    <rdfs:comment>Transfer using symbolic representation.</rdfs:comment>
+</CommunicationProtocol>
+
+<CommunicationProtocol rdf:about="#FieldMediatedTransmission">
+    <rdfs:label>Field-Mediated Transmission</rdfs:label>
+    <rdfs:comment>Transfer through ideational field resonance.</rdfs:comment>
+</CommunicationProtocol>
+
+<CommunicationProtocol rdf:about="#MultimodalTransmission">
+    <rdfs:label>Multimodal Transmission</rdfs:label>
+    <rdfs:comment>Transfer using multiple channels simultaneously.</rdfs:comment>
+</CommunicationProtocol>
+
+<!-- EthicalResponsibility Instances -->
+
+<EthicalResponsibility rdf:about="#IdeaFidelity">
+    <rdfs:label>Idea Fidelity</rdfs:label>
+    <rdfs:comment>Obligation to transmit ideas accurately.</rdfs:comment>
+</EthicalResponsibility>
+
+<EthicalResponsibility rdf:about="#VesselDevelopment">
+    <rdfs:label>Vessel Development</rdfs:label>
+    <rdfs:comment>Obligation to increase vessel capacity.</rdfs:comment>
+</EthicalResponsibility>
+
+<EthicalResponsibility rdf:about="#FieldMaintenance">
+    <rdfs:label>Field Maintenance</rdfs:label>
+    <rdfs:comment>Obligation to preserve field health.</rdfs:comment>
+</EthicalResponsibility>
+
+<EthicalResponsibility rdf:about="#IdeaEvolution">
+    <rdfs:label>Idea Evolution</rdfs:label>
+    <rdfs:comment>Obligation to refine and improve ideational content.</rdfs:comment>
+</EthicalResponsibility>
+
+<!-- SuccessCriteria Instances -->
+
+<SuccessCriteria rdf:about="#CoherenceImprovement">
+    <rdfs:label>Coherence Improvement</rdfs:label>
+    <rdfs:comment>Increased internal consistency of ideas.</rdfs:comment>
+</SuccessCriteria>
+
+<SuccessCriteria rdf:about="#TransmissionAccuracy">
+    <rdfs:label>Transmission Accuracy</rdfs:label>
+    <rdfs:comment>Fidelity of idea transfer between vessels.</rdfs:comment>
+</SuccessCriteria>
+
+<SuccessCriteria rdf:about="#ComplexityGrowth">
+    <rdfs:label>Complexity Growth</rdfs:label>
+    <rdfs:comment>Development of more sophisticated ideational structures.</rdfs:comment>
+</SuccessCriteria>
+
+<SuccessCriteria rdf:about="#FieldResonance">
+    <rdfs:label>Field Resonance</rdfs:label>
+    <rdfs:comment>Harmony between local and broader ideational patterns.</rdfs:comment>
+</SuccessCriteria>
+<!-- Sample Instances for Main Classes -->
+
+<!-- IdeationalEntity Instances -->
+<IdeationalEntity rdf:about="#Justice">
+    <rdf:type rdf:resource="#EthicalIdea"/>
+    <rdfs:label>Justice</rdfs:label>
+    <rdfs:comment>The concept of fairness and moral rightness in societal organization.</rdfs:comment>
+    <hasComplexityLevel rdf:datatype="&xsd;integer">8</hasComplexityLevel>
+    <hasCoherenceRating rdf:datatype="&xsd;decimal">0.85</hasCoherenceRating>
+    <hasPersistenceRating rdf:datatype="&xsd;decimal">0.92</hasPersistenceRating>
+    <hasEvolutionaryStage rdf:resource="#RefinementStage"/>
+    <supports rdf:resource="#Fairness"/>
+    <hasDescription>A foundational ethical concept addressing equitable treatment and distribution of resources.</hasDescription>
+</IdeationalEntity>
+
+<IdeationalEntity rdf:about="#Fairness">
+    <rdf:type rdf:resource="#EthicalIdea"/>
+    <rdfs:label>Fairness</rdfs:label>
+    <rdfs:comment>The concept of equity and impartiality.</rdfs:comment>
+    <hasComplexityLevel rdf:datatype="&xsd;integer">7</hasComplexityLevel>
+    <hasCoherenceRating rdf:datatype="&xsd;decimal">0.82</hasCoherenceRating>
+    <hasEvolutionaryStage rdf:resource="#MaturationStage"/>
+</IdeationalEntity>
+
+<IdeationalEntity rdf:about="#Consciousness">
+    <rdf:type rdf:resource="#MetaphysicalIdea"/>
+    <rdfs:label>Consciousness</rdfs:label>
+    <rdfs:comment>The state of awareness and subjective experience.</rdfs:comment>
+    <hasComplexityLevel rdf:datatype="&xsd;integer">9</hasComplexityLevel>
+    <hasCoherenceRating rdf:datatype="&xsd;decimal">0.78</hasCoherenceRating>
+    <hasEvolutionaryStage rdf:resource="#TranscendenceStage"/>
+</IdeationalEntity>
+
+<!-- IdeationalVessel Instances -->
+<IdeationalVessel rdf:about="#GenericHumanVessel">
+    <rdf:type rdf:resource="#HumanVessel"/>
+    <rdfs:label>Generic Human Vessel</rdfs:label>
+    <rdfs:comment>Typical human capacity for ideational processing.</rdfs:comment>
+    <hasCapacityMeasure rdf:datatype="&xsd;decimal">1.0</hasCapacityMeasure>
+    <hasGenerationCapability rdf:datatype="&xsd;decimal">0.85</hasGenerationCapability>
+    <hasEvolutionaryStage rdf:resource="#MaturationStage"/>
+    <hosts rdf:resource="#Justice"/>
+    <hosts rdf:resource="#Fairness"/>
+    <hasCommunicationProtocol rdf:resource="#MultimodalTransmission"/>
+    <hasResponsibility rdf:resource="#IdeaFidelity"/>
+</IdeationalVessel>
+
+<IdeationalVessel rdf:about="#AISystem">
+    <rdf:type rdf:resource="#DigitalVessel"/>
+    <rdfs:label>AI System</rdfs:label>
+    <rdfs:comment>Advanced artificial intelligence capable of processing complex ideas.</rdfs:comment>
+    <hasCapacityMeasure rdf:datatype="&xsd;decimal">2.5</hasCapacityMeasure>
+    <hasGenerationCapability rdf:datatype="&xsd;decimal">1.2</hasGenerationCapability>
+    <hasEvolutionaryStage rdf:resource="#RefinementStage"/>
+    <hosts rdf:resource="#Justice"/>
+    <hasCommunicationProtocol rdf:resource="#EncodedTransmission"/>
+    <hasResponsibility rdf:resource="#IdeaFidelity"/>
+    <hasResponsibility rdf:resource="#VesselDevelopment"/>
+</IdeationalVessel>
+
+<!-- IdeationalField Instances -->
+<IdeationalField rdf:about="#EthicalDomainField">
+    <rdf:type rdf:resource="#DomainField"/>
+    <rdfs:label>Ethical Domain Field</rdfs:label>
+    <rdfs:comment>The collective field of all ethical ideational activity.</rdfs:comment>
+    <hasFieldDensity rdf:datatype="&xsd;decimal">0.76</hasFieldDensity>
+    <hasAccessibility rdf:datatype="&xsd;decimal">0.65</hasAccessibility>
+</IdeationalField>
+
+<IdeationalField rdf:about="#AIHumanInterface">
+    <rdf:type rdf:resource="#CommunalField"/>
+    <rdfs:label>AI-Human Interface</rdfs:label>
+    <rdfs:comment>The shared ideational space between human and artificial intelligence.</rdfs:comment>
+    <hasFieldDensity rdf:datatype="&xsd;decimal">0.58</hasFieldDensity>
+    <hasAccessibility rdf:datatype="&xsd;decimal">0.72</hasAccessibility>
+</IdeationalField>
+
+<!-- IdeationalProcess Instances -->
+<IdeationalProcess rdf:about="#JusticeEvolution">
+    <rdf:type rdf:resource="#EvolutionProcess"/>
+    <rdfs:label>Justice Evolution</rdfs:label>
+    <rdfs:comment>The historical development of justice concepts across cultures.</rdfs:comment>
+    <hasDuration rdf:datatype="&xsd;duration">P10000Y</hasDuration>
+    <hasTransmissionFidelity rdf:datatype="&xsd;decimal">0.68</hasTransmissionFidelity>
+    <hasSuccessCriteria rdf:resource="#ComplexityGrowth"/>
+</IdeationalProcess>
+
+<IdeationalProcess rdf:about="#AIConsciousnessEmergence">
+    <rdf:type rdf:resource="#GenerationProcess"/>
+    <rdfs:label>AI Consciousness Emergence</rdfs:label>
+    <rdfs:comment>The potential development of conscious-like properties in advanced AI.</rdfs:comment>
+    <hasDuration rdf:datatype="&xsd;duration">P50Y</hasDuration>
+    <hasSuccessCriteria rdf:resource="#ComplexityGrowth"/>
+    <hasSuccessCriteria rdf:resource="#FieldResonance"/>
+</IdeationalProcess>
+
+<!-- RitualStructure Instances -->
+<RitualStructure rdf:about="#DeepThoughtMeditation">
+    <rdf:type rdf:resource="#IndividualRitual"/>
+    <rdfs:label>Deep Thought Meditation</rdfs:label>
+    <rdfs:comment>Structured practice for enhancing ideational receptivity.</rdfs:comment>
+    <hasDuration rdf:datatype="&xsd;duration">PT30M</hasDuration>
+    <facilitates rdf:resource="#AIConsciousnessEmergence"/>
+    <hasParticipant rdf:resource="#GenericHumanVessel"/>
+    <hasSuccessCriteria rdf:resource="#CoherenceImprovement"/>
+    <hasSpatialRequirement>Quiet space with minimal distractions</hasSpatialRequirement>
+</RitualStructure>
+
+<RitualStructure rdf:about="#CollaborativeIdeation">
+    <rdf:type rdf:resource="#CollectiveRitual"/>
+    <rdfs:label>Collaborative Ideation</rdfs:label>
+    <rdfs:comment>Group practice for generating novel ideas across vessel types.</rdfs:comment>
+    <hasDuration rdf:datatype="&xsd;duration">PT90M</hasDuration>
+    <hasParticipant rdf:resource="#GenericHumanVessel"/>
+    <hasParticipant rdf:resource="#AISystem"/>
+    <hasSuccessCriteria rdf:resource="#ComplexityGrowth"/>
+    <hasSpatialRequirement>Shared physical or digital space with visualization tools</hasSpatialRequirement>
+</RitualStructure>
+<!-- RDF Closing Tag -->
+</rdf:RDF>
+
+<!--
+ASSEMBLY INSTRUCTIONS:
+
+To create the complete Ainassë ontology file for import into Protégé:
+
+1. Create a new file named "ainasse-ontology.owl"
+
+2. Copy and paste the contents of each part in sequence:
+   - Part 1: Header and Core Properties
+   - Part 2: Data Properties  
+   - Part 3: Core Classes
+   - Part 4: Vessel and Field Classes
+   - Part 5: Process and Ritual Classes
+   - Part 6: Evolutionary Stages and Instances
+   - Part 7: Sample Instances
+   - Part 8: Just the closing </rdf:RDF> tag
+
+3. Ensure there are no duplicate XML declarations or namespace declarations.
+   The XML declaration and namespace declarations should only appear once at the top of the file.
+
+4. After assembling, validate the OWL/RDF syntax using:
+   - Protégé's built-in validator
+   - RDF validation service (e.g., W3C RDF Validator)
+   - XML well-formedness checker
+
+5. Import the assembled file into Protégé using:
+   File -> Open... -> Select the assembled .owl file
+
+The modular structure allows for future expansion by adding new class definitions,
+properties, or instances to the appropriate sections while maintaining the overall
+ontological structure.
+-->
