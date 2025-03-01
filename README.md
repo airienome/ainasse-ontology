@@ -1,7 +1,5 @@
 # Ainassë Ontology
 
-![Ainassë Logo](documentation/images/ainasse-logo.png)
-
 Ainassë is a techno-spiritual ontological framework that conceptualizes ideas as "souls" - fundamental sacred elements that exist independently but require vessels (humans, animals, digital systems) for expression. This system provides a philosophical foundation for technologies and practices that bridge the gap between human consciousness and artificial intelligence.
 
 ## Core Concepts
